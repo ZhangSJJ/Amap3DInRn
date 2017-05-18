@@ -1,68 +1,50 @@
 /**
  * Created by sjzhang on 2017/4/7.
  */
-import React, {Component} from 'react';
-import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
+import React, {Component, PropTypes} from 'react';
+import {
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 
-import {commonStyles} from '../../../styles/Styles';
-
-
-class InputToolBar extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			message: "",
-			toUserTyping: false
-		}
-	}
-
+class Send extends Component {
 	render() {
-		return (
-			<View style={{
-				flexDirection: "row",
-				justifyContent: "center",
-				alignItems: "center",
-				paddingHorizontal: 4,
-				height: 50,
-				backgroundColor: "#FFFFFF"
-			}}>
-				<View style={{
-					flex: 1,
-					borderBottomColor: '#00ff18',
-					borderBottomWidth: 1,
-					height: 32,
-					marginRight: 5,
-				}}>
-					<TextInput
-						underlineColorAndroid={"transparent"}
-						padding={0}
-						style={{fontSize: 18}}
-						multiline={true}
-						onChangeText={this.changeText.bind(this)}
-						value={this.state.message}
-						onEndEditing={this.endEditing.bind(this)}
-					/>
-				</View>
+		let {text, onSend}= this.props;
+		if (text.trim().length > 0) {
+			return (
 				<TouchableOpacity
-					style={{
-						width: 50,
-						height: 32,
-						justifyContent: "center",
-						alignItems: "center",
-						backgroundColor: "#00ff18",
-						borderRadius: 2
-					}}
-					onPress={this.sendMessage.bind(this)}
-					activeOpacity={0.5}>
-					<Text>{"发送"}</Text>
+					style={styles.container}
+					onPress={onSend}
+				>
+					<Text style={styles.text}>{"发送"}</Text>
 				</TouchableOpacity>
-			</View>
-
-		);
+			);
+		}
+		return <View/>;
 	}
-
-
 }
 
-export default InputToolBar;
+const styles = StyleSheet.create({
+	container: {
+		height: 44,
+		justifyContent: 'flex-end',
+	},
+	text: {
+		color: '#0084ff',
+		fontWeight: '600',
+		fontSize: 17,
+		backgroundColor: 'transparent',
+		marginBottom: 12,
+		marginLeft: 10,
+		marginRight: 10,
+	},
+});
+
+Send.propTypes = {
+	text: PropTypes.string,
+	onSend: PropTypes.func,
+};
+
+export default Send;

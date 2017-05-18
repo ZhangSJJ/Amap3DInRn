@@ -1,51 +1,57 @@
 /**
  * Created by sjzhang on 2017/5/18.
  */
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
-	Platform,
 	StyleSheet,
 	TextInput,
+	View
 } from 'react-native';
 
-export default class Composer extends React.Component {
+class Composer extends Component {
 	render() {
-		let {onChange, composerHeight, text} = this.props;
+		let {onChange, composerHeight, text, onEndEditing} = this.props;
 		return (
-			<TextInput
-				multiline={true}
-				onChange={(e) => {
-					onChange(e);
-				}}
-				style={[styles.textInput, {
-					height: composerHeight,
-				}]}
-				value={text}
-				underlineColorAndroid="transparent"
-			/>
+			<View style={styles.inputContainer}>
+				<TextInput
+					multiline={true}
+					onChange={(e) => {
+						onChange && onChange(e);
+					}}
+					style={[styles.textInput, {
+						height: composerHeight,
+					}]}
+					value={text}
+					onEndEditing={()=> {
+						onEndEditing && onEndEditing();
+					}}
+					underlineColorAndroid="transparent"
+				/>
+			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	textInput: {
+	inputContainer: {
 		flex: 1,
-		marginLeft: 10,
+		borderBottomColor: '#00ff18',
+		borderBottomWidth: 1,
+		marginBottom: 4,
+		marginHorizontal: 4,
+		paddingVertical: 4
+	},
+	textInput: {
 		fontSize: 16,
-		lineHeight: 16,
-		marginTop: 0,
-		marginBottom: 3,
+		padding: 0
 	},
 });
 
-
 Composer.propTypes = {
-	onChange: React.PropTypes.func,
-	composerHeight: React.PropTypes.number,
-	text: React.PropTypes.string,
-	placeholder: React.PropTypes.string,
-	placeholderTextColor: React.PropTypes.string,
-	textInputProps: React.PropTypes.object,
-	multiline: React.PropTypes.bool,
-	textInputStyle: TextInput.propTypes.style,
+	onChange: PropTypes.func,
+	onEndEditing: PropTypes.func,
+	composerHeight: PropTypes.number,
+	text: PropTypes.string,
 };
+
+export default Composer;
