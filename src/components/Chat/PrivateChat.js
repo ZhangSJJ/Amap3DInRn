@@ -116,6 +116,7 @@ class PrivateChat extends Component {
 		//将所有toUid的消息设置为已读
 		let {roomId} = this.props;
 		this.actions.setAllToUidMessageRead(roomId);
+		WisdomXY.userInRoomIdNow = 0;
 		//通知对方我停止输入
 		this.endEditing();
 	}
