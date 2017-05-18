@@ -21,12 +21,14 @@ class MCNavigator extends Component {
 	}
 
 	render() {
-		return <Navigator
-			ref="navigator"
-			initialRoute={{name: "homePage"}}
-			configureScene={(route) => Navigator.SceneConfigs.PushFromRight}
-			renderScene={this.renderScene.bind(this)}>
-		</Navigator>
+		return (
+			<Navigator
+				ref="navigator"
+				initialRoute={{name: "homePage"}}
+				configureScene={(route) => Navigator.SceneConfigs.PushFromRight}
+				renderScene={this.renderScene.bind(this)}>
+			</Navigator>
+		);
 	}
 
 

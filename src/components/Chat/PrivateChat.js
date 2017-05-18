@@ -8,10 +8,9 @@ import AppSocket from '../../utils/SocketHander';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import actions from '../../actions/actions';
-import WXYFetch from '../../utils/fetchData/WXYFetch';
 import BackToolBar from '../Common/BackToolBar';
-import Loading from '../Common/Loading';
 import ChatContent from './ChatContent';
+import {commonStyles} from '../../styles/Styles';
 
 const toImage = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491738269445&di=f1a5ece74e9ee63718da0e8c7736f69c&imgtype=0&src=http%3A%2F%2Fico.ooopic.com%2Fajax%2Ficonpng%2F%3Fid%3D109229.png";
 const fromImage = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492333036&di=f003955c488854454efdff18779b7a34&imgtype=jpg&er=1&src=http%3A%2F%2Fico.ooopic.com%2Fajax%2Ficonpng%2F%3Fid%3D319012.png";
@@ -34,11 +33,11 @@ class PrivateChat extends Component {
 		let messageInfo = privateMessageInfo[roomId] || {};
 		let messageArray = messageInfo.message || [];
 		return (
-			<View style={{flex: 1, backgroundColor: "#EEEEEE"}}>
+			<View style={commonStyles.container}>
 				<BackToolBar navigator={navigator}
 				             titleColor={"white"}
 				             title={toUserTyping ? "对方正在输入..." : userInfo.nickName}
-				             style={{backgroundColor: "#444444"}}/>
+				             style={commonStyles.backToolBar}/>
 				<ChatContent messageArray={messageArray}/>
 				<View style={{
 					flexDirection: "row",

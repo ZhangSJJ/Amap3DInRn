@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import ReactNative from 'react-native';
 import MCNavigator from './MCNavigator';
+import {McAppStyles} from './styles/Styles';
 const {
 	View,
 	StatusBar
@@ -16,7 +17,7 @@ class MCApp extends Component {
 
 	render() {
 		return (
-			<View style={{flex: 1, backgroundColor: "#fff"}}>
+			<View style={McAppStyles.container}>
 				<StatusBar
 					backgroundColor="#333333"
 					hidden={false}
