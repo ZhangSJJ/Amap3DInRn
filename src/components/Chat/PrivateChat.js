@@ -13,7 +13,7 @@ import InputToolBar from './InputToolBar/InputToolBar';
 import ChatContent from './ChatContent';
 import {commonStyles} from '../../styles/Styles';
 
-const MAX_COMPOSER_HEIGHT = 60;
+const MAX_COMPOSER_HEIGHT = 63.5;
 const MIN_COMPOSER_HEIGHT = 33;
 
 

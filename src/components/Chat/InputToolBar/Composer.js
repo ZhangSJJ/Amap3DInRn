@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 4
 	},
 	textInput: {
-		fontSize: 16,
+		fontSize: 18,
 		padding: 0
 	},
 });
