@@ -21,6 +21,7 @@ const messageReducer = handleActions({
 		privateMessageInfo[roomId].message = privateMessageInfo[roomId].message || [];
 		privateMessageInfo[roomId].message.push(data);
 		privateMessageInfo[roomId].lastMessageTime = data.time;
+		privateMessageInfo[roomId].roomId = roomId;
 		//设置全局变量，当前未读消息的条数
 		WisdomXY.computeMessageUnRead(privateMessageInfo, DeviceInfo.iMei);
 		return {
