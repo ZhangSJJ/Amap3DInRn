@@ -79,7 +79,11 @@ class ChatContent extends Component {
 		}
 		return (
 
-			<ScrollView ref={view=>this._scrollView = view} style={{flex: 1, marginBottom: 10}}>
+			<ScrollView
+				onLayout={()=> {
+					this._scrollView && this._scrollView.scrollToEnd({animated: true});
+				}}
+				ref={view=>this._scrollView = view} style={{flex: 1, marginBottom: 10}}>
 
 				<View style={{justifyContent: "center", alignItems: "center", marginTop: 20}}><Text
 					style={{
@@ -99,9 +103,9 @@ class ChatContent extends Component {
 		);
 	}
 
-	componentDidUpdate() {
-		this._scrollView && this._scrollView.scrollToEnd({animated: true});
-	}
+	// componentDidUpdate() {
+	// 	this._scrollView && this._scrollView.scrollToEnd({animated: true});
+	// }
 
 	// componentWillReceiveProps() {
 	// 	this._scrollView && this._scrollView.scrollToEnd({animated: true});

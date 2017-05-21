@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import AppSocket from '../../utils/SocketHander';
 import MapView from '../../native/component/RCTNativeComponent';
 import DeviceInfo from '../../native/module/DeviceInfo';
+import MessageTip from './MessageTip';
+import {commonStyles} from '../../styles/Styles';
 class MapPageView extends Component {
 	constructor(props) {
 		super(props);
@@ -15,70 +17,19 @@ class MapPageView extends Component {
 		};
 	}
 
-
 	render() {
+		let {navigator} = this.props;
 		return (
-			<View style={{flex: 1}}>
-				<MapView style={{flex: 1}}
+			<View style={commonStyles.flex1}>
+				<MapView style={commonStyles.flex1}
 				         startLoacation={true}
-
 				         markers={this.state.markers}
 				         logoPosition={"middle"}/>
-				{
-					WisdomXY.messageListIconShow ?
-						<TouchableOpacity
-							activeOpacity={0.5}
-							onPress={this.handlePress.bind(this)}
-							style={{
-								height: 40,
-								width: 100,
-								position: "absolute",
-								bottom: 10,
-								left: 10,
-								justifyContent: "center",
-								alignItems: "center"
-
-							}}>
-							<View style={{
-								backgroundColor: "#03A9F4", width: 80,
-								height: 30, justifyContent: "center",
-								alignItems: "center", borderRadius: 15
-							}}>
-								<Text style={{color: "white"}}>{"消息列表"}</Text>
-							</View>
-
-							{
-								WisdomXY.messageUnReadCount ?
-									<View style={{
-										position: "absolute",
-										width: 20,
-										height: 20,
-										backgroundColor: "red",
-										justifyContent: "center",
-										alignItems: "center",
-										borderRadius: 20,
-										right: 0,
-										top: 0
-									}}>
-										<Text style={{color: "white"}}>{WisdomXY.messageUnReadCount}</Text>
-									</View>
-									:
-									null
-							}
-
-
-						</TouchableOpacity>
-						:
-						null
-				}
+				<MessageTip tipShow={WisdomXY.messageListIconShow}
+				            navigator={navigator}
+				            messageUnReadCount={WisdomXY.messageUnReadCount}/>
 			</View>
-
 		);
-	}
-
-	handlePress() {
-		let {navigator} = this.props;
-		navigator.push({name: "message_list"});
 	}
 
 	componentWillMount() {

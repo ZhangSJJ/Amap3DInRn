@@ -2,6 +2,7 @@ package com.amp3dinrn;
 
 import com.amp3dinrn.amap.AMapViewManager;
 import com.amp3dinrn.device.DeviceModule;
+import com.amp3dinrn.splash.RCTSplashScreenModule;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -21,6 +22,7 @@ public class JSReactPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new DeviceModule(reactContext));
+        modules.add(new RCTSplashScreenModule(reactContext));
         return modules;
     }
 

@@ -10,7 +10,7 @@ router.get('/getUserInfo', function (req, res, next) {
 
 	var uid = params.uid;
 	var data = TextData[uid] || {
-			avatar: "http://photo.blog.sina.com.cn/showpic.html#blogid=4b31056f0102wswa&url=http://album.sina.com.cn/pic/001nn8Mnzy77Qqaijl4b6",
+			avatar: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495356687735&di=570b69de6951aee4db230ed9ec360d72&imgtype=0&src=http%3A%2F%2Fimg1.3lian.com%2F2015%2Fgif%2Fw%2F63%2F68.jpg",
 			nickName: "嗨",
 			signature: "这个人太懒，什么都没有留下"
 		};

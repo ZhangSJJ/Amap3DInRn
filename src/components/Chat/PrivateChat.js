@@ -8,13 +8,13 @@ import AppSocket from '../../utils/SocketHander';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import actions from '../../actions/actions';
-import WXYFetch from '../../utils/fetchData/WXYFetch';
 import BackToolBar from '../Common/BackToolBar';
-import Loading from '../Common/Loading';
+import InputToolBar from './InputToolBar/InputToolBar';
 import ChatContent from './ChatContent';
+import {commonStyles} from '../../styles/Styles';
 
-const toImage = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491738269445&di=f1a5ece74e9ee63718da0e8c7736f69c&imgtype=0&src=http%3A%2F%2Fico.ooopic.com%2Fajax%2Ficonpng%2F%3Fid%3D109229.png";
-const fromImage = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492333036&di=f003955c488854454efdff18779b7a34&imgtype=jpg&er=1&src=http%3A%2F%2Fico.ooopic.com%2Fajax%2Ficonpng%2F%3Fid%3D319012.png";
+const MAX_COMPOSER_HEIGHT = 63.5;
+const MIN_COMPOSER_HEIGHT = 33;
 
 
 class PrivateChat extends Component {
@@ -24,61 +24,28 @@ class PrivateChat extends Component {
 		this.actions = bindActionCreators(actions, dispatch);
 		this.state = {
 			message: "",
-			toUserTyping: false
+			toUserTyping: false,
+			composerHeight: MIN_COMPOSER_HEIGHT
 		}
 	}
 
 	render() {
-		let {toUserTyping} = this.state;
-		let {userInfo, toUid, navigator, privateMessageInfo, roomId} = this.props;
+		let {toUserTyping, message, composerHeight} = this.state;
+		let {userInfo, navigator, privateMessageInfo, roomId} = this.props;
 		let messageInfo = privateMessageInfo[roomId] || {};
 		let messageArray = messageInfo.message || [];
 		return (
-			<View style={{flex: 1, backgroundColor: "#EEEEEE"}}>
+			<View style={commonStyles.container}>
 				<BackToolBar navigator={navigator}
 				             titleColor={"white"}
 				             title={toUserTyping ? "对方正在输入..." : userInfo.nickName}
-				             style={{backgroundColor: "#444444"}}/>
+				             style={commonStyles.backToolBar}/>
 				<ChatContent messageArray={messageArray}/>
-				<View style={{
-					flexDirection: "row",
-					justifyContent: "center",
-					alignItems: "center",
-					paddingHorizontal: 4,
-					height: 50,
-					backgroundColor: "#FFFFFF"
-				}}>
-					<View style={{
-						flex: 1,
-						borderBottomColor: '#00ff18',
-						borderBottomWidth: 1,
-						height: 32,
-						marginRight: 5,
-					}}>
-						<TextInput
-							underlineColorAndroid={"transparent"}
-							padding={0}
-							style={{fontSize: 18}}
-							multiline={true}
-							onChangeText={this.changeText.bind(this)}
-							value={this.state.message}
-							onEndEditing={this.endEditing.bind(this)}
-						/>
-					</View>
-					<TouchableOpacity
-						style={{
-							width: 50,
-							height: 32,
-							justifyContent: "center",
-							alignItems: "center",
-							backgroundColor: "#00ff18",
-							borderRadius: 2
-						}}
-						onPress={this.sendMessage.bind(this)}
-						activeOpacity={0.5}>
-						<Text>{"发送"}</Text>
-					</TouchableOpacity>
-				</View>
+				<InputToolBar onEndEditing={this.endEditing.bind(this)}
+				              text={message}
+				              composerHeight={composerHeight}
+				              onSend={this.sendMessage.bind(this)}
+				              onChange={this.onChange.bind(this)}/>
 			</View>
 		);
 	}
@@ -90,10 +57,10 @@ class PrivateChat extends Component {
 			return;
 		}
 		AppSocket.emit("private_chat_message_send", {message, fromUid: DeviceInfo.iMei, toUid, roomId});
-		this.setState({message: ""});
+		this.setState({message: "", composerHeight: MIN_COMPOSER_HEIGHT});
 	}
 
-	changeText(message) {
+	onChange(e) {
 		let {toUid, roomId} = this.props;
 		let typingUid = DeviceInfo.iMei;
 		AppSocket.emit("private_chat_message_type", {
@@ -103,7 +70,17 @@ class PrivateChat extends Component {
 			actionType: "typing",
 			roomId
 		});
-		this.setState({message});
+
+		let newComposerHeight = MIN_COMPOSER_HEIGHT;
+		if (e.nativeEvent && e.nativeEvent.contentSize) {
+			newComposerHeight = Math.max(MIN_COMPOSER_HEIGHT, Math.min(MAX_COMPOSER_HEIGHT, e.nativeEvent.contentSize.height));
+		}
+
+		const message = e.nativeEvent.text;
+		this.setState({
+			message,
+			composerHeight: newComposerHeight,
+		});
 	}
 
 	endEditing() {
@@ -139,6 +116,7 @@ class PrivateChat extends Component {
 		//将所有toUid的消息设置为已读
 		let {roomId} = this.props;
 		this.actions.setAllToUidMessageRead(roomId);
+		WisdomXY.userInRoomIdNow = 0;
 		//通知对方我停止输入
 		this.endEditing();
 	}

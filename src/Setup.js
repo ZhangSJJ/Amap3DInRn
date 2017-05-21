@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import configureStore from './store/store';
 import {Provider} from 'react-redux';
 import actions from './actions/actions';
+import Splash from './native/module/Splash';
 import {MESSAGE_TYPE} from './constants/ConstantValue';
 import AppSocket from './utils/SocketHander';
 import DeviceInfo from './native/module/DeviceInfo';
@@ -51,6 +52,14 @@ class MoCApp extends Component {
 	componentWillUnmount() {
 		AppSocket.off(DeviceInfo.iMei);
 		AppSocket.off("private_chat_message_receive");
+	}
+
+	componentDidMount() {
+		Splash.close({
+			animationType: Splash.animationType.scale,
+			duration: 850,
+			delay: 500,
+		});
 	}
 }
 

@@ -23,7 +23,7 @@ io.on('connection', function (socket) {
 	socket.on('clear_position', function (iMei) {
 		//向所有客户端广播发布的消息
 		// io.emit('clear_position', iMei);
-		position[iMei].onLine = false;
+		position[iMei] && (position[iMei].onLine = false);
 		io.emit('share_position', position);
 		delete position[iMei];
 	});

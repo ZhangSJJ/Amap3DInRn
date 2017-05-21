@@ -14,9 +14,12 @@ class MessageListContent extends Component {
 	}
 
 	render() {
-		let {message, lastMessageTime, friendsUserInfo} = this.props;
-		//todo 将来要根据当前页面来判断消息是否已读，条数放在全局变量里
+		let {message, lastMessageTime, friendsUserInfo, roomId} = this.props;
+		//根据当前页面来判断消息是否已读
 		let count = message.filter(data=>!data.messageRead).length;
+		if (WisdomXY.userInRoomIdNow == roomId) {
+			count = 0;
+		}
 		let latestMessage = message[message.length - 1];
 		let {fromUid, toUid} = latestMessage;
 		if (toUid == DeviceInfo.iMei) {
@@ -95,6 +98,7 @@ class MessageListContent extends Component {
 			toUid = fromUid;
 			fromUid = DeviceInfo.iMei;
 		}
+		WisdomXY.userInRoomIdNow = roomId;
 		AppSocket.emit("lunch_private_chat", {fromUid, toUid, roomId: latestMessage.roomId});
 		navigator.push({
 			name: "private_chat",

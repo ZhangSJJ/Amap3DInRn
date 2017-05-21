@@ -54,6 +54,7 @@ class MessageList extends Component {
 								                    navigator={navigator}
 								                    lastMessageTime={data.lastMessageTime}
 								                    actions={this.actions}
+								                    roomId={data.roomId}
 								                    friendsUserInfo={friendsUserInfo}
 								                    key={index}/>
 							);

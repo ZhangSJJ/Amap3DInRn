@@ -56,5 +56,7 @@ WisdomXY.computeMessageUnRead = (messageInfo, uid) => {
 WisdomXY.messageUnReadCount = 0;
 WisdomXY.messageListIconShow = false;
 WisdomXY.privateRoomIdDict = {};
+//当前所在的聊天室
+WisdomXY.userInRoomIdNow = 0;
 
 export default WisdomXY != null && WisdomXY != undefined;

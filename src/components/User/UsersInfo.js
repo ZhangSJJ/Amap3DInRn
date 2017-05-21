@@ -11,6 +11,7 @@ import AppSocket from '../../utils/SocketHander';
 import BackToolBar from '../Common/BackToolBar';
 import Loading from '../Common/Loading';
 import {createRoomId} from '../../utils/DataUtils';
+import {UserInfoStyles, commonStyles} from '../../styles/Styles';
 
 const url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491580274800&di=33bd031f1892b29619405033827b8077&imgtype=0&src=http%3A%2F%2Fattachments.gfan.com%2Fforum%2Fattachments2%2F201304%2F10%2F104028xfxsklfilosaa1jh.jpg";
 
@@ -25,48 +26,35 @@ class PersonInfo extends Component {
 		let {navigator, friendsUserInfo, uid} = this.props;
 		let userInfo = friendsUserInfo[uid];
 		return (
-			<View style={{flex: 1, backgroundColor: "#EEEEEE"}}>
+			<View style={commonStyles.container}>
 				<BackToolBar navigator={navigator}
 				             titleColor={"white"}
 				             title={"详细资料"}
-				             style={{backgroundColor: "#444444"}}/>
+				             style={commonStyles.backToolBar}/>
 				{
 					!userInfo ? <Loading backColor={"#EEEEEE"}/> :
-						<View style={{flex: 1}}>
-							<View style={{
-								flexDirection: "row",
-								height: 96,
-								backgroundColor: "white",
-								justifyContent: "center",
-								alignItems: "center",
-								paddingHorizontal: 15,
-								marginTop: 20
-							}}>
+						<View style={commonStyles.flex1}>
+							<View style={UserInfoStyles.avatarWrap}>
 								<Image source={{uri: userInfo.avatar}}
-								       style={{height: 76, width: 76}}/>
-								<View style={{flex: 1, height: 76, paddingLeft: 20}}>
-									<View style={{flex: 1, justifyContent: "center"}}>
-										<Text numberOfLines={1} style={{color: "#3E3E3E"}}>{userInfo.nickName}</Text>
-									</View>
-									<View style={{height: 20, justifyContent: "center"}}>
+								       style={UserInfoStyles.avatarImage}/>
+								<View style={UserInfoStyles.avatarOthers}>
+									<View style={UserInfoStyles.nickNameWrap}>
 										<Text numberOfLines={1}
-										      style={{color: "#BBBBBB"}}>{`个性签名：${userInfo.signature}`}</Text>
+										      style={UserInfoStyles.nickName}>{userInfo.nickName}</Text>
+									</View>
+									<View style={UserInfoStyles.signatureWrap}>
+										<Text numberOfLines={1}
+										      style={UserInfoStyles.signature}>{`个性签名：${userInfo.signature}`}</Text>
 									</View>
 								</View>
 							</View>
 
 							<TouchableOpacity
-								style={{height: 50, marginTop: 20, paddingHorizontal: 15}}
+								style={UserInfoStyles.sendMessageWrap}
 								onPress={this.onPress.bind(this)}
 								activeOpacity={0.8}>
-								<View style={{
-									flex: 1,
-									backgroundColor: "#46b950",
-									borderRadius: 4,
-									justifyContent: "center",
-									alignItems: "center"
-								}}>
-									<Text style={{fontSize: 16, color: "#FFFFFF"}}>{"发消息"}</Text>
+								<View style={UserInfoStyles.sendMessageView}>
+									<Text style={UserInfoStyles.sendMessageText}>{"发消息"}</Text>
 								</View>
 							</TouchableOpacity>
 						</View>
