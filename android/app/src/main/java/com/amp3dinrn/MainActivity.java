@@ -1,5 +1,7 @@
 package com.amp3dinrn;
 
+import android.os.Bundle;
+import com.amp3dinrn.splash.RCTSplashScreen;
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -27,6 +29,12 @@ public class MainActivity extends ReactActivity {
     protected void onDestroy() {
         super.onDestroy();
         System.exit(0);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        RCTSplashScreen.openSplashScreen(this);
+        super.onCreate(savedInstanceState);
     }
 
 }
