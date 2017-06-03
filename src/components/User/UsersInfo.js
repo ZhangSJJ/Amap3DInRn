@@ -75,7 +75,17 @@ class PersonInfo extends Component {
 	componentWillMount() {
 		let {uid, friendsUserInfo} = this.props;
 		if (!friendsUserInfo[uid]) {
-			this.actions.getUserInfo(uid);
+			//先从本地获取用户信息
+			WisdomXY.storage.getItemWithKeyId("userInfo", uid).then(value=> JSON.parse(value)).then(json=> {
+				this.actions.setUserInfo({data: json.data, uid});
+				//再从服务器获取用户信息
+				this.actions.getUserInfo(uid);
+			}).catch(err => {
+				//再从服务器获取用户信息
+				this.actions.getUserInfo(uid);
+			});
+
+
 		}
 	}
 }

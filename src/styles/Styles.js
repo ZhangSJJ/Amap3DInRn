@@ -25,7 +25,7 @@ export const commonStyles = StyleSheet.create({
 	backToolBar: {
 		backgroundColor: "#444444"
 	},
-	container:{
+	container: {
 		flex: 1,
 		backgroundColor: "#EEEEEE"
 	}
@@ -46,7 +46,7 @@ export const MessageTipStyles = StyleSheet.create({
 		bottom: 10,
 		left: 10,
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "center",
 	},
 	tipWrap: {
 		backgroundColor: "#03A9F4",
@@ -68,6 +68,38 @@ export const MessageTipStyles = StyleSheet.create({
 		top: 0
 	}
 });
+
+export const MeStyles = StyleSheet.create({
+	container: {
+		height: 40,
+		width: 70,
+		position: "absolute",
+		bottom: 10,
+		right: 10,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	tipWrap: {
+		backgroundColor: "#03A9F4",
+		width: 50,
+		height: 30,
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: 15
+	},
+	messageUnReadCount: {
+		position: "absolute",
+		width: 20,
+		height: 20,
+		backgroundColor: "red",
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: 20,
+		right: 0,
+		top: 0
+	}
+});
+
 
 export const UserInfoStyles = StyleSheet.create({
 	avatarWrap: {
@@ -102,19 +134,19 @@ export const UserInfoStyles = StyleSheet.create({
 	signature: {
 		color: "#BBBBBB"
 	},
-	sendMessageWrap:{
+	sendMessageWrap: {
 		height: 50,
 		marginTop: 20,
 		paddingHorizontal: 15
 	},
-	sendMessageView:{
+	sendMessageView: {
 		flex: 1,
 		backgroundColor: "#46b950",
 		borderRadius: 4,
 		justifyContent: "center",
 		alignItems: "center"
 	},
-	sendMessageText:{
+	sendMessageText: {
 		fontSize: 16,
 		color: "#FFFFFF"
 	}

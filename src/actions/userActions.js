@@ -20,9 +20,17 @@ export function getUserInfo(uid) {
 					return;
 				}
 				dispatch(receiveFriendsUserInfo({data: json.data, uid}));
+				//存一份到本地
+				WisdomXY.storage.setItemWithKeyId("userInfo", uid, json);
 			}
 		).catch(e => {
 			dispatch(receiveFriendsUserInfo(e));
 		});
 	};
+}
+
+export function setUserInfo(data) {
+	return dispatch=> {
+		dispatch(receiveFriendsUserInfo(data));
+	}
 }

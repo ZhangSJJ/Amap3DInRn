@@ -39,6 +39,8 @@ class MCNavigator extends Component {
 			return <PrivateChat  {...route} navigator={navigator}/>
 		} else if (route.name === "message_list") {
 			return <MessageList  {...route} navigator={navigator}/>
+		} else if (route.name === "my_user_info") {
+			return <View/>
 		}
 		return <MapPageView {...route} navigator={navigator}/>
 	}

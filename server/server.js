@@ -50,7 +50,7 @@ io.on('connection', function (socket) {
 			return;
 		}
 
-		socket.broadcast.emit(data.toUid, {
+		io.emit(data.toUid, {
 			action: "lunch_private_chat",
 			fromUid: data.fromUid,
 			toUid: data.toUid,
@@ -62,7 +62,7 @@ io.on('connection', function (socket) {
 		socket.roomIdDict.push(data.roomId);
 		socket.toUsers.push(data.fromUid);
 		socket.join(data.roomId);
-		socket.broadcast.emit(data.fromUid, {
+		io.emit(data.fromUid, {
 			action: "join_private_chat_room",
 			roomId: data.roomId,
 			fromUid: data.fromUid,
