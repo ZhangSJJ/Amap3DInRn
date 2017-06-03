@@ -104,7 +104,7 @@ export const MeStyles = StyleSheet.create({
 export const UserInfoStyles = StyleSheet.create({
 	avatarWrap: {
 		flexDirection: "row",
-		height: 96,
+		height: 86,
 		backgroundColor: "white",
 		justifyContent: "center",
 		alignItems: "center",
@@ -112,8 +112,8 @@ export const UserInfoStyles = StyleSheet.create({
 		marginTop: 20
 	},
 	avatarImage: {
-		height: 76,
-		width: 76
+		height: 66,
+		width: 66
 	},
 	avatarOthers: {
 		flex: 1,
@@ -150,5 +150,28 @@ export const UserInfoStyles = StyleSheet.create({
 		fontSize: 16,
 		color: "#FFFFFF"
 	}
+});
 
+export const MyUserInfoStyles = StyleSheet.create({
+	avatarInfoContainer: {
+		flexDirection: "row",
+		height: 86,
+		backgroundColor: "white",
+		justifyContent: "space-between",
+		alignItems: "center",
+		paddingHorizontal: 15,
+		marginTop: 20,
+		borderBottomWidth: 1,
+		borderColor: "#e8e8e8"
+	},
+	basicInfoContainer: {
+		flexDirection: "row",
+		height: 50,
+		backgroundColor: "white",
+		justifyContent: "space-between",
+		alignItems: "center",
+		paddingHorizontal: 15,
+		borderBottomWidth: 1,
+		borderColor: "#e8e8e8"
+	},
 });
