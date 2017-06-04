@@ -115,8 +115,23 @@ class MessageListContent extends Component {
 		if (toUid == DeviceInfo.iMei) {
 			toUid = fromUid;
 		}
+
 		if (!friendsUserInfo[toUid]) {
-			actions.getUserInfo(toUid);
+			//先从本地获取用户信息
+			WisdomXY.storage.getItemWithKeyId("userInfo", toUid).then(value=> JSON.parse(value)).then(json=> {
+				actions.setUserInfo({data: json.data, toUid});
+				//再从服务器获取用户信息
+				actions.getUserInfo(toUid, ()=> {
+					//存一份到本地
+					WisdomXY.storage.setItemWithKeyId("userInfo", toUid, json);
+				});
+			}).catch(err => {
+				//再从服务器获取用户信息
+				actions.getUserInfo(toUid, ()=> {
+					//存一份到本地
+					WisdomXY.storage.setItemWithKeyId("userInfo", toUid, json);
+				});
+			});
 		}
 	}
 

@@ -10,7 +10,8 @@ import WXYFetch from '../utils/fetchData/WXYFetch';
 const receiveFriendsUserInfo = createAction(ActionTypes.RECEIVE_FRIENDS_USER_INFO);
 
 
-export function getUserInfo(uid) {
+export function getUserInfo(uid, callback = ()=> {
+}) {
 	return dispatch => {
 		WXYFetch.fetchServerData(`${httpServer}/users/getUserInfo`, {uid}, "GET")
 			.then(response => {
@@ -20,8 +21,7 @@ export function getUserInfo(uid) {
 					return;
 				}
 				dispatch(receiveFriendsUserInfo({data: json.data, uid}));
-				//存一份到本地
-				WisdomXY.storage.setItemWithKeyId("userInfo", uid, json);
+				callback();
 			}
 		).catch(e => {
 			dispatch(receiveFriendsUserInfo(e));
@@ -33,4 +33,23 @@ export function setUserInfo(data) {
 	return dispatch=> {
 		dispatch(receiveFriendsUserInfo(data));
 	}
+}
+
+export function updateUserInfo(params, callback = ()=> {
+}) {
+	return dispatch => {
+		WXYFetch.fetchServerData(`${httpServer}/users/updateUserInfo`, params, "POST")
+			.then(response => {
+				return response.json();
+			}).then(json=> {
+				if (json.error_code != 0) {
+					return;
+				}
+				dispatch(receiveFriendsUserInfo({uid: params.uid, data: params}));
+				callback();
+			}
+		).catch(e => {
+			// dispatch(receiveFriendsUserInfo(e));
+		});
+	};
 }

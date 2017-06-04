@@ -20,7 +20,7 @@ const userInfoReducer = handleActions({
 
 		let friendsUserInfo = {...state.friendsUserInfo};
 		let {payload:{data, uid}} = action;
-		friendsUserInfo[uid] = data;
+		friendsUserInfo[uid] = {...friendsUserInfo[uid], ...data};
 		return {
 			...state,
 			friendsUserInfo

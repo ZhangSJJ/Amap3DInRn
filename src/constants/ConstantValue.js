@@ -2,8 +2,8 @@
  * Created by sjzhang on 2017/4/6.
  */
 
-export const hostname = "121.52.235.231";
-export const port = 40425;
+export const hostname = "192.168.137.1";
+export const port = 3000;
 export const httpServer = `http://${hostname}:${port}`;
 
 // 'http://10.0.40.89:300

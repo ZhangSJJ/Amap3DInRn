@@ -11,10 +11,9 @@ function fetchServerData(url, data, method = "GET") {
 	} else if (method === "POST") {
 		return fetch(url, {
 			method: 'POST',
-			// headers: {
-			// 	'User-Agent': 'my_user_agent',
-			// 	'Cookie': `auth_token=${authToken}`
-			// },
+			headers: {
+				'content-type': 'application/json'
+			},
 			body: JSON.stringify(data)
 		})
 	}

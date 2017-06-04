@@ -3,13 +3,16 @@
  */
 import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import DeviceInfo from '../../native/module/DeviceInfo';
 import BackToolBar from '../Common/BackToolBar';
 import {UserInfoStyles, MyUserInfoStyles, commonStyles} from '../../styles/Styles';
 import {USER_INFO_TYPE} from '../../constants/ConstantValue';
 
 class AvatarInfo extends Component {
 	render() {
-		let {userInfo} = this.props;
+		let {friendsUserInfo} = this.props;
+		let userInfo = friendsUserInfo[DeviceInfo.iMei];
 		return (
 			<View style={MyUserInfoStyles.avatarInfoContainer}>
 				<View><Text>{"头像"}</Text></View>
@@ -22,7 +25,8 @@ class AvatarInfo extends Component {
 
 class BasicInfo extends Component {
 	render() {
-		let {info, userInfo, index} = this.props;
+		let {info, friendsUserInfo, index} = this.props;
+		let userInfo = friendsUserInfo[DeviceInfo.iMei];
 		return (
 			<TouchableOpacity
 				activeOpacity={0.5}
@@ -35,8 +39,9 @@ class BasicInfo extends Component {
 	}
 
 	handlePress(info) {
-		let {navigator, userInfo} = this.props;
-		navigator.push({name: "edit_user_info", userInfo, infoType: info.btnId, infoColumn: info.value});
+		let {navigator, friendsUserInfo, actions} = this.props;
+		let userInfo = friendsUserInfo[DeviceInfo.iMei];
+		navigator.push({name: "edit_user_info", userInfo, info, actions});
 	}
 }
 
@@ -44,22 +49,30 @@ const basic = [
 	{
 		key: "头像",
 		value: "avatar",
-		btnId: USER_INFO_TYPE.AVATAR
+		btnId: USER_INFO_TYPE.AVATAR,
+		maxLength: 30,
+		backBarText: "更换头像"
 	},
 	{
 		key: "昵称",
 		value: "nickName",
-		btnId: USER_INFO_TYPE.NICKNAME
+		btnId: USER_INFO_TYPE.NICKNAME,
+		maxLength: 30,
+		backBarText: "更改昵称"
 	},
 	{
 		key: "账号",
 		value: "account",
-		btnId: USER_INFO_TYPE.ACCOUNT
+		btnId: USER_INFO_TYPE.ACCOUNT,
+		maxLength: 30,
+		backBarText: "设置账号"
 	},
 	{
 		key: "我的地址",
 		value: "address",
-		btnId: USER_INFO_TYPE.ADDRESS
+		btnId: USER_INFO_TYPE.ADDRESS,
+		maxLength: 30,
+		backBarText: "添加地址"
 	}
 ];
 
@@ -67,17 +80,23 @@ const otherInfo = [
 	{
 		key: "性别",
 		value: "sex",
-		btnId: USER_INFO_TYPE.SEX
+		btnId: USER_INFO_TYPE.SEX,
+		maxLength: 30,
+		backBarText: "更改性别"
 	},
 	{
 		key: "地区",
 		value: "area",
-		btnId: USER_INFO_TYPE.AREA
+		btnId: USER_INFO_TYPE.AREA,
+		maxLength: 30,
+		backBarText: "更改地区"
 	},
 	{
 		key: "个性签名",
 		value: "signature",
-		btnId: USER_INFO_TYPE.SIGNATURE
+		btnId: USER_INFO_TYPE.SIGNATURE,
+		maxLength: 30,
+		backBarText: "个性签名"
 	}
 ];
 
@@ -124,4 +143,6 @@ class MyUserInfo extends Component {
 	}
 }
 
-export default MyUserInfo;
+export default connect(state => ({
+	friendsUserInfo: state.userInfo.friendsUserInfo
+}))(MyUserInfo);

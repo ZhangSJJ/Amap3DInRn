@@ -56,8 +56,8 @@ class AvatarInfo extends Component {
 	}
 
 	handlePress() {
-		let {navigator, friendsUserInfo, uid} = this.props;
-		navigator.push({name: "my_user_info", userInfo: friendsUserInfo[uid]});
+		let {navigator, friendsUserInfo, uid, actions} = this.props;
+		navigator.push({name: "my_user_info", userInfo: friendsUserInfo[uid], actions});
 	}
 }
 
@@ -104,7 +104,7 @@ class PersonInfo extends Component {
 				{
 					!userInfo ? <Loading backColor={"#EEEEEE"}/> :
 						<View style={commonStyles.flex1}>
-							<AvatarInfo {...this.props}/>
+							<AvatarInfo {...this.props} actions={this.actions}/>
 							<SendMessageBtn {...this.props}/>
 						</View>
 				}
@@ -120,13 +120,17 @@ class PersonInfo extends Component {
 			WisdomXY.storage.getItemWithKeyId("userInfo", uid).then(value=> JSON.parse(value)).then(json=> {
 				this.actions.setUserInfo({data: json.data, uid});
 				//再从服务器获取用户信息
-				this.actions.getUserInfo(uid);
+				this.actions.getUserInfo(uid, ()=> {
+					//存一份到本地
+					WisdomXY.storage.setItemWithKeyId("userInfo", uid, json);
+				});
 			}).catch(err => {
 				//再从服务器获取用户信息
-				this.actions.getUserInfo(uid);
+				this.actions.getUserInfo(uid, ()=> {
+					//存一份到本地
+					WisdomXY.storage.setItemWithKeyId("userInfo", uid, json);
+				});
 			});
-
-
 		}
 	}
 }
