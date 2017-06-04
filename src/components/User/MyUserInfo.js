@@ -2,16 +2,10 @@
  * Created by sjzhang on 2017/4/7.
  */
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import actions from '../../actions/actions';
-import DeviceInfo from '../../native/module/DeviceInfo';
-import AppSocket from '../../utils/SocketHander';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import BackToolBar from '../Common/BackToolBar';
-import Loading from '../Common/Loading';
-import {createRoomId} from '../../utils/DataUtils';
 import {UserInfoStyles, MyUserInfoStyles, commonStyles} from '../../styles/Styles';
+import {USER_INFO_TYPE} from '../../constants/ConstantValue';
 
 class AvatarInfo extends Component {
 	render() {
@@ -30,11 +24,19 @@ class BasicInfo extends Component {
 	render() {
 		let {info, userInfo, index} = this.props;
 		return (
-			<View style={[MyUserInfoStyles.basicInfoContainer, index === 0 ? {marginTop: 20} : undefined]}>
+			<TouchableOpacity
+				activeOpacity={0.5}
+				onPress={this.handlePress.bind(this, info)}
+				style={[MyUserInfoStyles.basicInfoContainer, index === 0 ? {marginTop: 20} : undefined]}>
 				<View><Text>{info.key}</Text></View>
 				<View><Text>{userInfo[info.value]}</Text></View>
-			</View>
+			</TouchableOpacity>
 		);
+	}
+
+	handlePress(info) {
+		let {navigator, userInfo} = this.props;
+		navigator.push({name: "edit_user_info", userInfo, infoType: info.btnId, infoColumn: info.value});
 	}
 }
 
@@ -42,22 +44,22 @@ const basic = [
 	{
 		key: "头像",
 		value: "avatar",
-		btnId: "avatar"
+		btnId: USER_INFO_TYPE.AVATAR
 	},
 	{
 		key: "昵称",
 		value: "nickName",
-		btnId: "nickname"
+		btnId: USER_INFO_TYPE.NICKNAME
 	},
 	{
 		key: "账号",
 		value: "account",
-		btnId: "account"
+		btnId: USER_INFO_TYPE.ACCOUNT
 	},
 	{
 		key: "我的地址",
 		value: "address",
-		btnId: "address"
+		btnId: USER_INFO_TYPE.ADDRESS
 	}
 ];
 
@@ -65,30 +67,27 @@ const otherInfo = [
 	{
 		key: "性别",
 		value: "sex",
-
-		btnId: "sex"
+		btnId: USER_INFO_TYPE.SEX
 	},
 	{
 		key: "地区",
 		value: "area",
-		btnId: "area"
+		btnId: USER_INFO_TYPE.AREA
 	},
 	{
 		key: "个性签名",
 		value: "signature",
-		btnId: "signature"
+		btnId: USER_INFO_TYPE.SIGNATURE
 	}
 ];
 
 class MyUserInfo extends Component {
 	constructor(props) {
 		super(props);
-		const {dispatch} = this.props;
-		this.actions = bindActionCreators(actions, dispatch);
 	}
 
 	render() {
-		let {navigator, userInfo} = this.props;
+		let {navigator} = this.props;
 		return (
 			<View style={commonStyles.container}>
 				<BackToolBar navigator={navigator}

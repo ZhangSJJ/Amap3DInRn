@@ -175,3 +175,20 @@ export const MyUserInfoStyles = StyleSheet.create({
 		borderColor: "#e8e8e8"
 	},
 });
+
+export const EditUserInfoStyles = StyleSheet.create({
+	rightItemView: {
+		backgroundColor: "#03A9F4",
+		paddingHorizontal: 8,
+		paddingVertical: 4,
+		borderRadius: 2
+	},
+	inputView:{
+		flexDirection: "row",
+		backgroundColor: "white",
+		paddingHorizontal: 15,
+		borderBottomWidth: 1,
+		borderColor: "#e8e8e8",
+		marginTop: 20
+	}
+});

@@ -14,6 +14,7 @@ import PersonInfo from './components/User/UsersInfo';
 import PrivateChat from './components/Chat/PrivateChat';
 import MessageList from './components/Chat/MessageList';
 import MyUserInfo from './components/User/MyUserInfo';
+import EditUserInfo from './components/User/EditUserInfo';
 
 class MCNavigator extends Component {
 	constructor(props) {
@@ -42,6 +43,8 @@ class MCNavigator extends Component {
 			return <MessageList {...route} navigator={navigator}/>
 		} else if (route.name === "my_user_info") {
 			return <MyUserInfo {...route} navigator={navigator}/>
+		} else if (route.name === "edit_user_info") {
+			return <EditUserInfo {...route} navigator={navigator}/>
 		}
 		return <MapPageView {...route} navigator={navigator}/>
 	}

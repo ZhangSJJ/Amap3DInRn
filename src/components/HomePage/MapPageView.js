@@ -29,7 +29,7 @@ class MapPageView extends Component {
 				<MessageTip tipShow={WisdomXY.messageListIconShow}
 				            navigator={navigator}
 				            messageUnReadCount={WisdomXY.messageUnReadCount}/>
-				<Me  navigator={navigator}/>
+				<Me navigator={navigator}/>
 			</View>
 		);
 	}
