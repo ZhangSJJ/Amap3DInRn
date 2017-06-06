@@ -2,8 +2,9 @@
  * Created by sjzhang on 2017/6/3.
  */
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import BackToolBar from '../Common/BackToolBar';
+import LoadingModal from '../Common/LoadingModal';
 import {EditUserInfoStyles, commonStyles} from '../../styles/Styles';
 import Composer from '../Chat/InputToolBar/Composer';
 import DeviceInfo from '../../native/module/DeviceInfo';
@@ -44,8 +45,14 @@ class EditUserInfo extends Component {
 						          onChange={this.onChange.bind(this)}/>
 					</View>
 				</View>
-
-
+				<LoadingModal ref={view=>this._loadingModal = view}>
+					<View style={EditUserInfoStyles.loadingModalContainer}>
+						<ActivityIndicator
+							animating={true}
+							size="small"/>
+						<Text style={commonStyles.textColorWhite}>{"正在保存"}</Text>
+					</View>
+				</LoadingModal>
 			</View>
 		);
 	}
@@ -69,12 +76,17 @@ class EditUserInfo extends Component {
 		if (text === "" || text === userInfo[value]) {
 			return;
 		}
+
+		this._loadingModal && this._loadingModal.open();
+
 		let params = {uid: DeviceInfo.iMei, [value]: text};
 		actions.updateUserInfo(params, ()=> {
-			alert("success");
 			//存一份到本地
 			let newUserInfo = {...userInfo, [value]: text};
 			WisdomXY.storage.setItemWithKeyId("userInfo", DeviceInfo.iMei, newUserInfo);
+			if (navigator && navigator.getCurrentRoutes().length > 1) {
+				navigator.pop();
+			}
 		});
 
 	}

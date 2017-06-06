@@ -183,12 +183,20 @@ export const EditUserInfoStyles = StyleSheet.create({
 		paddingVertical: 4,
 		borderRadius: 2
 	},
-	inputView:{
+	inputView: {
 		flexDirection: "row",
 		backgroundColor: "white",
 		paddingHorizontal: 15,
 		borderBottomWidth: 1,
 		borderColor: "#e8e8e8",
 		marginTop: 20
+	},
+	loadingModalContainer: {
+		width: WIDTH * .2,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: 'rgba(70, 70, 70,1)',
+		borderRadius: 2,
+		paddingVertical: 6
 	}
 });
