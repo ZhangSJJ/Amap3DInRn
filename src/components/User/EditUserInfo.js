@@ -80,13 +80,19 @@ class EditUserInfo extends Component {
 		this._loadingModal && this._loadingModal.open();
 
 		let params = {uid: DeviceInfo.iMei, [value]: text};
-		actions.updateUserInfo(params, ()=> {
-			//存一份到本地
-			let newUserInfo = {...userInfo, [value]: text};
-			WisdomXY.storage.setItemWithKeyId("userInfo", DeviceInfo.iMei, newUserInfo);
-			if (navigator && navigator.getCurrentRoutes().length > 1) {
-				navigator.pop();
+		actions.updateUserInfo(params, (flag)=> {
+			if (flag) {
+				//存一份到本地
+				let newUserInfo = {...userInfo, [value]: text};
+				WisdomXY.storage.setItemWithKeyId("userInfo", DeviceInfo.iMei, newUserInfo);
+				if (navigator && navigator.getCurrentRoutes().length > 1) {
+					navigator.pop();
+				}
+			} else {
+				alert("error")
+				this._loadingModal && this._loadingModal.close();
 			}
+
 		});
 
 	}
