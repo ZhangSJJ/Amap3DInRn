@@ -43,13 +43,15 @@ export function updateUserInfo(params, callback = ()=> {
 				return response.json();
 			}).then(json=> {
 				if (json.error_code != 0) {
+					callback(false);
 					return;
 				}
 				dispatch(receiveFriendsUserInfo({uid: params.uid, data: params}));
-				callback();
+				callback(true);
 			}
 		).catch(e => {
 			// dispatch(receiveFriendsUserInfo(e));
+			callback(false);
 		});
 	};
 }
