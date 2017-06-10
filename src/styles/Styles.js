@@ -113,7 +113,8 @@ export const UserInfoStyles = StyleSheet.create({
 	},
 	avatarImage: {
 		height: 66,
-		width: 66
+		width: 66,
+		backgroundColor: "#EEEEEE"
 	},
 	avatarOthers: {
 		flex: 1,

@@ -39,7 +39,7 @@ class MessageView extends Component {
 			</View>
 		);
 		let imageContent = (
-			<View key={"image_content"} style={{width: 40, height: 40, backgroundColor: "white"}}>
+			<View key={"image_content"} style={{width: 40, height: 40, backgroundColor: "#FFFFFF"}}>
 				<Image style={{width: 40, height: 40}}
 				       source={{uri: DeviceInfo.iMei == fromUid ? fromImageUri : toImageUri}}/>
 			</View>

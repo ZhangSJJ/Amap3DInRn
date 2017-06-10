@@ -22,9 +22,10 @@ class AvatarInfo extends Component {
 
 		let contentArray = [];
 		contentArray.push(
-			<Image source={{uri: userInfo.avatar}}
-			       style={UserInfoStyles.avatarImage}
-			       key={"avatar_image"}/>
+			<View key={"avatar_image"} style={UserInfoStyles.avatarImage}>
+				<Image source={{uri: userInfo.avatar}}
+				       style={UserInfoStyles.avatarImage}/>
+			</View>
 		);
 		contentArray.push(
 			<View style={UserInfoStyles.avatarOthers} key={"avatar_info"}>
