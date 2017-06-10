@@ -55,3 +55,25 @@ export function updateUserInfo(params, callback = ()=> {
 		});
 	};
 }
+
+export function getUserinfoFormStorageAndServer(uid) {
+	return dispatch=> {
+		//先从本地获取用户信息
+		WisdomXY.storage.getItemWithKeyId("userInfo", uid).then(value=> JSON.parse(value)).then(json=> {
+			if (json) {
+				dispatch(setUserInfo({data: json, uid}));
+			}
+			//再从服务器获取用户信息
+			dispatch(getUserInfo(uid, ()=> {
+				//存一份到本地
+				WisdomXY.storage.setItemWithKeyId("userInfo", uid, json);
+			}));
+		}).catch(err => {
+			//再从服务器获取用户信息
+			dispatch(getUserInfo(uid, ()=> {
+				//存一份到本地
+				WisdomXY.storage.setItemWithKeyId("userInfo", uid, json);
+			}));
+		});
+	}
+}
