@@ -4,6 +4,11 @@
 var URL = require('url');
 var express = require('express');
 var fs = require('fs');
+//parse multipart/form-data
+var multer = require('multer');
+var destination = 'ApiServer/routes/data/images/avatar/';
+var upload = multer({dest: destination});
+
 var router = express.Router();
 var UserInfoData = require("../data/UserInfoData.json");
 var defaultUserInfo = {
@@ -54,6 +59,26 @@ router.post('/updateUserInfo', function (req, res) {
 		}
 		res.send(JSON.stringify(response));
 	});
+});
+
+// 单图上传
+router.post('/upload', upload.single("avatar"), function (req, res) {
+	var file = req.file;
+	//以下代码得到文件后缀
+	var name = file.originalname;
+	var nameArray = name.split('');
+	var nameMime = [];
+	var l = nameArray.pop();
+	nameMime.unshift(l);
+	while (nameArray.length != 0 && l != '.') {
+		l = nameArray.pop();
+		nameMime.unshift(l);
+	}
+	//Mime是文件的后缀
+	var Mime = nameMime.join('');
+	res.send("done");
+	//重命名文件 加上文件后缀
+	fs.renameSync('./' + destination + file.filename, './' + destination + file.fieldname + Mime);
 });
 
 module.exports = router;
