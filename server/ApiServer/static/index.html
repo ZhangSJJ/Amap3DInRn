@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<pre id="x">Initializing...</pre>
+<script>
+    var es = new EventSource("http://10.0.42.97:3000/users/eventsource");
+    es.addEventListener("message", function(e){
+        document.getElementById("x").innerHTML += "\n" + e.data;
+    },false);
+    es.addEventListener("myEvent", function(e){
+        document.getElementById("x").innerHTML += "\nmyEvent:" + e.data;
+    },false);
+</script>
+</body>
+<script>
+
+
+</script>
+</html>

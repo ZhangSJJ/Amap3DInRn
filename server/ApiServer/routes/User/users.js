@@ -81,4 +81,21 @@ router.post('/upload', upload.single("avatar"), function (req, res) {
 	fs.renameSync('./' + destination + file.filename, './' + destination + file.fieldname + Mime);
 });
 
+
+//test h5 event source
+router.get('/eventsource', function (req, res) {
+	console.log(111)
+	res.setHeader("Content-Type", "text/event-stream");
+	res.setHeader("Cache-Control", "no-cache");
+
+	res.write(
+		"event: myEvent" + "\n" +
+		'data: {"msg": '+ Date.now() +'}\n\n'+
+		'data: {"msg": "asdfsdfsdf"}\n\n'
+	);
+
+});
+
+
+
 module.exports = router;
