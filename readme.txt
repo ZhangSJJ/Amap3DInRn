@@ -1,3 +1,5 @@
+使用ReactNative结合高德地图api实现的基于地理位置的聊天App
+
 生产发布版本apk
 1、Android 签名文件生成 ，使用 key tool 命令生成签名秘钥
 windows cmd 执行命令
