@@ -47,6 +47,9 @@ class MoCApp extends Component {
 			data.time = Date.now();
 			this.state.store.dispatch(actions.receiveMessage(data, MESSAGE_TYPE.PRIVATE_MESSAGE));
 		});
+
+		//获取当前用户信息
+		this.state.store.dispatch(actions.getUserinfoFormStorageAndServer(DeviceInfo.iMei));
 	}
 
 	componentWillUnmount() {

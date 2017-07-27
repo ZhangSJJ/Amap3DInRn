@@ -20,19 +20,19 @@ class BackToolBar extends Component {
 	}
 
 	render() {
-		const {title, titleColor = '#aaa', style, rightItem, titleStyle} = this.props;
+		const {title, titleColor = '#aaa', style, rightItem, titleStyle, rightItemClick} = this.props;
 		return (
 			<View style={[styles.toolBar, style]}>
 				{/*goBack*/}
 				<TouchableOpacity
 					activeOpacity={0.5}
 					onPress={this.handleGoBack.bind(this)}>
-					<View style={styles.toolBarButton}>
+					<View style={[styles.toolBarButton, {width: 40}]}>
 						<Icon name="back" size={26} color={titleColor}/>
 					</View>
 				</TouchableOpacity>
 				{/*Title*/}
-				<View style={[styles.ViewSelectorContainer,titleStyle]}>
+				<View style={[styles.ViewSelectorContainer, titleStyle]}>
 					<View style={[styles.ViewSelector, {alignItems: 'flex-start', paddingLeft: 20}]}>
 						<Text numberOfLines={1} style={[styles.ViewSelectorText, {color: titleColor}]}>
 							{title}
@@ -40,9 +40,13 @@ class BackToolBar extends Component {
 					</View>
 				</View>
 				{/*rightItem*/}
-				<View style={styles.toolBarButton}>
-					{rightItem}
-				</View>
+				<TouchableOpacity
+					activeOpacity={0.5}
+					onPress={rightItemClick}>
+					<View style={styles.toolBarButton}>
+						{rightItem}
+					</View>
+				</TouchableOpacity>
 			</View>
 		)
 	}
@@ -60,7 +64,6 @@ let styles = StyleSheet.create({
 	},
 	toolBarButton: {
 		height: 40,
-		width: 40,
 		justifyContent: 'center',
 		alignItems: 'flex-start',
 	},

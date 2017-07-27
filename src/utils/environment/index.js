@@ -2,6 +2,7 @@
  * Created by sjzhang on 2016/11/17.
  */
 'use strict'
+import  Storage from '../storage/Storage';
 // log
 global.WisdomXY = global.WisdomXY || {
 		PRINT_DEBUG_LOG: false,
@@ -41,6 +42,8 @@ WisdomXY.info_log = (...args) => {
 		console.info((new Date()).toLocaleTimeString(), args);
 	}
 };
+
+WisdomXY.storage = new Storage();
 
 WisdomXY.computeMessageUnRead = (messageInfo, uid) => {
 	let count = 0;

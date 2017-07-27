@@ -10,7 +10,7 @@ import {
 
 class Composer extends Component {
 	render() {
-		let {onChange, composerHeight, text, onEndEditing} = this.props;
+		let {onChange, composerHeight, text, onEndEditing, maxLength} = this.props;
 		return (
 			<View style={styles.inputContainer}>
 				<TextInput
@@ -26,6 +26,7 @@ class Composer extends Component {
 						onEndEditing && onEndEditing();
 					}}
 					underlineColorAndroid="transparent"
+				    maxLength={maxLength}
 				/>
 			</View>
 		);

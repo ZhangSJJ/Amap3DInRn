@@ -18,6 +18,9 @@ io.on('connection', function (socket) {
 	socket.on('share_position', function (obj) {
 		//向所有客户端广播发布的消息
 		position = Object.assign(position, obj);
+		if (!socket.iMei) {
+			socket.iMei = Object.keys(obj)[0];
+		}
 	});
 
 	socket.on('clear_position', function (iMei) {
@@ -26,6 +29,12 @@ io.on('connection', function (socket) {
 		position[iMei] && (position[iMei].onLine = false);
 		io.emit('share_position', position);
 		delete position[iMei];
+	});
+
+	socket.on('disconnect', function () {
+		position[socket.iMei] && (position[socket.iMei].onLine = false);
+		io.emit('share_position', position);
+		delete position[socket.iMei];
 	});
 
 
@@ -41,7 +50,7 @@ io.on('connection', function (socket) {
 			return;
 		}
 
-		socket.broadcast.emit(data.toUid, {
+		io.emit(data.toUid, {
 			action: "lunch_private_chat",
 			fromUid: data.fromUid,
 			toUid: data.toUid,
@@ -53,7 +62,7 @@ io.on('connection', function (socket) {
 		socket.roomIdDict.push(data.roomId);
 		socket.toUsers.push(data.fromUid);
 		socket.join(data.roomId);
-		socket.broadcast.emit(data.fromUid, {
+		io.emit(data.fromUid, {
 			action: "join_private_chat_room",
 			roomId: data.roomId,
 			fromUid: data.fromUid,

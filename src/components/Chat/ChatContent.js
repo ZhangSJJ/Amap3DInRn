@@ -18,7 +18,7 @@ class MessageView extends Component {
 	}
 
 	render() {
-		let {messageInfo:{fromUid, toUid, message}} = this.props;
+		let {messageInfo:{fromUid, toUid, message}, fromImageUri, toImageUri} = this.props;
 
 		let contentArray = [];
 		let messageContent = (
@@ -39,8 +39,10 @@ class MessageView extends Component {
 			</View>
 		);
 		let imageContent = (
-			<Image key={"image_content"} style={{width: 40, height: 40}}
-			       source={{uri: DeviceInfo.iMei == fromUid ? fromImage : toImage}}/>
+			<View key={"image_content"} style={{width: 40, height: 40, backgroundColor: "#FFFFFF"}}>
+				<Image style={{width: 40, height: 40}}
+				       source={{uri: DeviceInfo.iMei == fromUid ? fromImageUri : toImageUri}}/>
+			</View>
 		);
 		let justifyContent = "flex-start";
 		if (DeviceInfo.iMei == fromUid) {
@@ -73,7 +75,9 @@ class ChatContent extends Component {
 	}
 
 	render() {
-		let {messageArray} = this.props;
+		let {messageArray, friendsUserInfo, toUid} = this.props;
+		let fromImageUri = friendsUserInfo[DeviceInfo.iMei].avatar;
+		let toImageUri = friendsUserInfo[toUid].avatar;
 		if (!messageArray || messageArray.length === 0) {
 			return <View style={{flex: 1}}/>;
 		}
@@ -95,7 +99,10 @@ class ChatContent extends Component {
 				{
 					messageArray.map((messageInfo, index)=> {
 						return (
-							<MessageView key={index} messageInfo={messageInfo}/>
+							<MessageView key={index}
+							             messageInfo={messageInfo}
+							             toImageUri={toImageUri}
+							             fromImageUri={fromImageUri}/>
 						)
 					})
 				}

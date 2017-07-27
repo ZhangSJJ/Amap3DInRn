@@ -9,6 +9,7 @@ import MapView from '../../native/component/RCTNativeComponent';
 import DeviceInfo from '../../native/module/DeviceInfo';
 import MessageTip from './MessageTip';
 import {commonStyles} from '../../styles/Styles';
+import Me from './Me';
 class MapPageView extends Component {
 	constructor(props) {
 		super(props);
@@ -28,6 +29,7 @@ class MapPageView extends Component {
 				<MessageTip tipShow={WisdomXY.messageListIconShow}
 				            navigator={navigator}
 				            messageUnReadCount={WisdomXY.messageUnReadCount}/>
+				<Me navigator={navigator}/>
 			</View>
 		);
 	}

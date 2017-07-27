@@ -13,3 +13,13 @@ export const MESSAGE_TYPE = {
 	PRIVATE_MESSAGE: "PRIVATE_MESSAGE",
 	GROUP_MESSAGE: "GROUP_MESSAGE"
 };
+
+export const USER_INFO_TYPE = {
+	AVATAR: "avatar",
+	NICKNAME: "nickname",
+	ACCOUNT: "account",
+	ADDRESS: "address",
+	SEX: "sex",
+	AREA: "area",
+	SIGNATURE: "signature"
+};

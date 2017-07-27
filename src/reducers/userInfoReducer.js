@@ -14,9 +14,13 @@ const initialState = {
 
 const userInfoReducer = handleActions({
 	[ActionTypes.RECEIVE_FRIENDS_USER_INFO]: (state, action) => {
+		if (action.error || !action.payload) {
+			return state;
+		}
+
 		let friendsUserInfo = {...state.friendsUserInfo};
 		let {payload:{data, uid}} = action;
-		friendsUserInfo[uid] = data;
+		friendsUserInfo[uid] = {...friendsUserInfo[uid], ...data};
 		return {
 			...state,
 			friendsUserInfo

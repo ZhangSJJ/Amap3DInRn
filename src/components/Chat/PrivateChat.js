@@ -31,7 +31,7 @@ class PrivateChat extends Component {
 
 	render() {
 		let {toUserTyping, message, composerHeight} = this.state;
-		let {userInfo, navigator, privateMessageInfo, roomId} = this.props;
+		let {userInfo, navigator, privateMessageInfo, roomId, friendsUserInfo, toUid} = this.props;
 		let messageInfo = privateMessageInfo[roomId] || {};
 		let messageArray = messageInfo.message || [];
 		return (
@@ -40,7 +40,7 @@ class PrivateChat extends Component {
 				             titleColor={"white"}
 				             title={toUserTyping ? "对方正在输入..." : userInfo.nickName}
 				             style={commonStyles.backToolBar}/>
-				<ChatContent messageArray={messageArray}/>
+				<ChatContent messageArray={messageArray} friendsUserInfo={friendsUserInfo} toUid={toUid}/>
 				<InputToolBar onEndEditing={this.endEditing.bind(this)}
 				              text={message}
 				              composerHeight={composerHeight}
@@ -123,5 +123,6 @@ class PrivateChat extends Component {
 }
 
 export default connect(state => ({
-	privateMessageInfo: state.messageInfo.privateMessageInfo
+	privateMessageInfo: state.messageInfo.privateMessageInfo,
+	friendsUserInfo: state.userInfo.friendsUserInfo
 }))(PrivateChat);
